@@ -11,9 +11,6 @@ public class cartService {
 
     public void saveOrder(Cart cart) {
 
-       // for (Cart cart: carts
-         //    )
-        {
         CartRepo crp=new CartRepo();
         crp.insert_details(cart);
 
@@ -29,6 +26,6 @@ public class cartService {
             }
 
 
-        }
+
     }
 
