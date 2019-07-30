@@ -5,6 +5,7 @@ import com.incedo.Cafe.Pojo.Cart;
 import com.incedo.Cafe.Services.Services;
 import com.incedo.Cafe.Services.cartService;
 import com.incedo.Cafe.Services.paytmService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class controller {
     public void hello(@RequestBody Greeting g){
         System.out.println(g.getContent()+" "+g.getId());
         jdbcTemplate.execute("insert into user_details values(1,'alkash',98728327)");
+
     }
     */
 
@@ -54,6 +56,7 @@ public class controller {
     public Object error() {
         return "Fail";
     }
+
 
 }
 
