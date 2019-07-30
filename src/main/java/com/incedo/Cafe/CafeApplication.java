@@ -12,8 +12,6 @@ public class CafeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CafeApplication.class, args);
 		System.out.println("Heello");
-		Greeting g =new Greeting(1,"sssd");
-		System.out.println(g);
 
 		//SQLBuilder sq =new SQLBuilder();
 
