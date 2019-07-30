@@ -30,7 +30,7 @@ public class CreateJdbcTemplate {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName(driverClassName);
+     //   dataSource.setDriverClassName(driverClassName);
 
         dataSource.setUrl(url);
 
