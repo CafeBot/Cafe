@@ -22,38 +22,7 @@ import java.util.TreeMap;
 @RestController
 public class controller {
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
-/*
-    @PostMapping("/greeting")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        Greeting g = new Greeting(1,"akash");
-        return g;
-    }
-    @PostMapping("/abc")
-    public void hello(@RequestBody Greeting g){
-        System.out.println(g.getContent()+" "+g.getId());
-        jdbcTemplate.execute("insert into user_details values(1,'alkash',98728327)");
-    }
-    */
-
-
-    @GetMapping("/user/order/pay")
-    public Object paytm(){
-        return Services.paytm();
-    }
-
-    @PostMapping("/paytmStatus")
-    public Object Satus() {
-        return "response";
-    }
-
-    @ExceptionHandler
-    @PostMapping
-    public Object error() {
-        return "Fail";
-    }
 }
 
 
