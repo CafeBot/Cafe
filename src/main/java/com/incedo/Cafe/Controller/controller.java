@@ -43,6 +43,13 @@ public class controller {
     }
     */
 
+    @PostMapping("/www.cafe.com/user/order/pay")
+    public String saveOrder(@RequestBody Cart carts){
+        cartService cartService = new cartService();
+        cartService.saveOrder(carts);
+        return "Success";
+    }
+
 
     @GetMapping("/user/order/pay")
     public Object paytm(){
