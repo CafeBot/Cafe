@@ -1,12 +1,22 @@
 package com.incedo.Cafe.Controller;
 
 import com.incedo.Cafe.Greeting;
-import com.incedo.Cafe.Repository.Order;
+import com.incedo.Cafe.Services.Services;
+import com.paytm.merchant.CheckSumServiceHelper;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.quartz.QuartzProperties;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 @RestController
@@ -15,8 +25,8 @@ public class controller {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-
-    @RequestMapping("/greeting")
+/*
+    @PostMapping("/greeting")
     public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
         Greeting g = new Greeting(1,"akash");
         return g;
@@ -26,6 +36,25 @@ public class controller {
         System.out.println(g.getContent()+" "+g.getId());
         jdbcTemplate.execute("insert into user_details values(1,'alkash',98728327)");
     }
+    */
 
+
+    @GetMapping("/user/order/pay")
+    public Object paytm(){
+        return Services.paytm();
+    }
+
+    @PostMapping("/paytmStatus")
+    public Object Satus() {
+        return "response";
+    }
+
+    @ExceptionHandler
+    @PostMapping
+    public Object error() {
+        return "Fail";
+    }
 }
+
+
 
