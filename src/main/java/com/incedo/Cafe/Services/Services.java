@@ -16,7 +16,7 @@ public class Services {
         System.out.println();
 
         /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
-        paytmParams.put("MID", "TQnSWF250669744195891");
+        paytmParams.put("MID", "TQnSWF25066974419589");
 
         /* Find your WEBSITE in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
         paytmParams.put("WEBSITE", "WEBSTAGING");
