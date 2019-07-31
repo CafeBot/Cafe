@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class controller {
 
 
-    @PostMapping("/user/order/save")
-    public String saveOrder(@RequestBody Cart carts){
+    @GetMapping("/user/order/save")
+    public Object saveOrder(@RequestBody Object object_cart){
+        Cart carts = (Cart) object_cart;
         cartService cartService = new cartService();
-        cartService.saveOrder(carts);
-        return "Success";
+        int Cart_id = cartService.saveOrder(carts);
+        return paytm(carts.getEmp_id(),Cart_id,carts.getTotal(),carts.getPh_no());
     }
 
     @Autowired
@@ -40,10 +41,10 @@ public class controller {
     */
 
 
-    @GetMapping("/user/order/pay")
-    public Object paytm(){
+    //@GetMapping("/user/order/pay")
+    public Object paytm(int Emp_id,int Cart_id,float Total,long Ph_no ){
         paytmService paytmService = new paytmService();
-        return paytmService.paytm();
+        return paytmService.paytm(Emp_id,Cart_id,Total,Ph_no);
     }
 
     @PostMapping("/paytmStatus")
@@ -51,9 +52,9 @@ public class controller {
         return "response";
     }
 
-    @ExceptionHandler
+
     @PostMapping
-    public Object error() {
+    public Object errorr() {
         return "Fail";
     }
 

@@ -8,7 +8,7 @@ import java.security.PrivateKey;
 import java.util.Objects;
 
 public class user_details {
-    public user_details(int emp_id, String name, int phone_no) {
+    public user_details(int emp_id, String name, long phone_no) {
         this.emp_id = emp_id;
         this.name = name;
         this.phone_no = phone_no;
@@ -55,11 +55,11 @@ public class user_details {
         this.name = name;
     }
 
-    public int getPhone_no() {
+    public long getPhone_no() {
         return phone_no;
     }
 
-    public void setPhone_no(int phone_no) {
+    public void setPhone_no(long phone_no) {
         this.phone_no = phone_no;
     }
 
@@ -73,5 +73,5 @@ public class user_details {
     private String name;
 
     @JsonProperty("phone_no")
-    private int phone_no;
+    private long phone_no;
 }

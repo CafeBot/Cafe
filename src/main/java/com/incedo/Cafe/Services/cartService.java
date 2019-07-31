@@ -9,10 +9,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class cartService {
 
 
-    public void saveOrder(Cart cart) {
+    public int saveOrder(Cart cart) {
 
         CartRepo crp = new CartRepo();
-        crp.insert_details(cart);
+        return crp.insert_details(cart);
     }
 }
 
