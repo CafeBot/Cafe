@@ -1,12 +1,13 @@
 package com.incedo.Cafe.Services;
 
+import com.incedo.Cafe.Pojo.Paytm;
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 public class paytmService {
-    public static Object paytm(int Emp_id,int Cart_id,float Total,long Ph_no) {
+    public static Object paytm(Paytm paytm) {
     TreeMap<String, String> paytmParams = new TreeMap<String, String>();
 
     /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
@@ -22,13 +23,13 @@ public class paytmService {
     paytmParams.put("CHANNEL_ID", "WEB");
 
     /* Enter your unique order id */
-    paytmParams.put("ORDER_ID", ""+Cart_id+"");
+    paytmParams.put("ORDER_ID", ""+paytm.getCart_id()+"");
 
     /* unique id that belongs to your customer */
-    paytmParams.put("CUST_ID", ""+Emp_id+"");
+    paytmParams.put("CUST_ID", ""+paytm.getEmp_id()+"");
 
     /* customer's mobile number */
-    paytmParams.put("MOBILE_NO", ""+Ph_no+"");
+    paytmParams.put("MOBILE_NO", ""+paytm.getPh_no()+"");
 
     /* customer's email */
     paytmParams.put("EMAIL", "demo@gmail.com");
@@ -37,7 +38,7 @@ public class paytmService {
  * Amount in INR that is payble by customer
  * this should be numeric with optionally having two decimal points
  */
-    paytmParams.put("TXN_AMOUNT", ""+Total+"");
+    paytmParams.put("TXN_AMOUNT", ""+paytm.getTotal()+"");
 
     /* on completion of transaction, we will send you the response on this URL */
     paytmParams.put("CALLBACK_URL", "http://localhost:8080/paytmStatus");
