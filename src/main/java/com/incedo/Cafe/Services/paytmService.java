@@ -1,17 +1,13 @@
 package com.incedo.Cafe.Services;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-public class paytmService { public static Object paytm() {
-    /* initialize a TreeMap object */
+public class paytmService {
+    public static Object paytm(int Emp_id,int Cart_id,float Total,long Ph_no) {
     TreeMap<String, String> paytmParams = new TreeMap<String, String>();
-
-    JdbcTemplate jdbcTemplate = new JdbcTemplate();
-    System.out.println();
 
     /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
     paytmParams.put("MID", "TQnSWF25066974419589");
@@ -26,22 +22,22 @@ public class paytmService { public static Object paytm() {
     paytmParams.put("CHANNEL_ID", "WEB");
 
     /* Enter your unique order id */
-    paytmParams.put("ORDER_ID", "11118");
+    paytmParams.put("ORDER_ID", ""+Cart_id+"");
 
     /* unique id that belongs to your customer */
-    paytmParams.put("CUST_ID", "111");
+    paytmParams.put("CUST_ID", ""+Emp_id+"");
 
     /* customer's mobile number */
-    paytmParams.put("MOBILE_NO", "8237668870");
+    paytmParams.put("MOBILE_NO", ""+Ph_no+"");
 
     /* customer's email */
-    paytmParams.put("EMAIL", "akashbarne.2@gmail.com");
+    paytmParams.put("EMAIL", "demo@gmail.com");
 
 /**
  * Amount in INR that is payble by customer
  * this should be numeric with optionally having two decimal points
  */
-    paytmParams.put("TXN_AMOUNT", "100");
+    paytmParams.put("TXN_AMOUNT", ""+Total+"");
 
     /* on completion of transaction, we will send you the response on this URL */
     paytmParams.put("CALLBACK_URL", "http://localhost:8080/paytmStatus");
