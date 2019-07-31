@@ -31,13 +31,6 @@ public class Cart {
     @JsonProperty("payment_status")
     private String payment_status;
 
-    public String getPayment_status() {
-        return payment_status;
-    }
-
-    public void setPayment_status(String payment_status) {
-        this.payment_status = payment_status;
-    }
 
     @JsonProperty("tnx_id")
     private String tnx_id;
@@ -59,42 +52,12 @@ public class Cart {
         return emp_id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cart cart = (Cart) o;
-        return emp_id == cart.emp_id &&
-                ph_no == cart.ph_no &&
-                cart_id == cart.cart_id &&
-                Float.compare(cart.total, total) == 0 &&
-                Objects.equals(emp_name, cart.emp_name) &&
-                Objects.equals(datetime, cart.datetime) &&
-                Objects.equals(payment_status, cart.payment_status) &&
-                Objects.equals(tnx_id, cart.tnx_id) &&
-                Arrays.equals(snack, cart.snack);
+    public String getPayment_status() {
+        return payment_status;
     }
 
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "emp_id=" + emp_id +
-                ", emp_name='" + emp_name + '\'' +
-                ", ph_no=" + ph_no +
-                ", cart_id=" + cart_id +
-                ", datetime=" + datetime +
-                ", total=" + total +
-                ", payment_status='" + payment_status + '\'' +
-                ", tnx_id='" + tnx_id + '\'' +
-                ", snack=" + Arrays.toString(snack) +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(emp_id, emp_name, ph_no, cart_id, datetime, total, payment_status, tnx_id);
-        result = 31 * result + Arrays.hashCode(snack);
-        return result;
+    public void setPayment_status(String payment_status) {
+        this.payment_status = payment_status;
     }
 
     public void setEmp_id(int emp_id) {
@@ -150,6 +113,44 @@ public class Cart {
         this.snack = snack;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return emp_id == cart.emp_id &&
+                ph_no == cart.ph_no &&
+                cart_id == cart.cart_id &&
+                Float.compare(cart.total, total) == 0 &&
+                Objects.equals(emp_name, cart.emp_name) &&
+                Objects.equals(datetime, cart.datetime) &&
+                Objects.equals(payment_status, cart.payment_status) &&
+                Objects.equals(tnx_id, cart.tnx_id) &&
+                Arrays.equals(snack, cart.snack);
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "emp_id=" + emp_id +
+                ", emp_name='" + emp_name + '\'' +
+                ", ph_no=" + ph_no +
+                ", cart_id=" + cart_id +
+                ", datetime=" + datetime +
+                ", total=" + total +
+                ", payment_status='" + payment_status + '\'' +
+                ", tnx_id='" + tnx_id + '\'' +
+                ", snack=" + Arrays.toString(snack) +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(emp_id, emp_name, ph_no, cart_id, datetime, total, payment_status, tnx_id);
+        result = 31 * result + Arrays.hashCode(snack);
+        return result;
+    }
 
     public Cart(int emp_id, String emp_name, long ph_no, int cart_id, Date datetime, float total, String payment_status, String tnx_id, Snack[] snack) {
         this.emp_id = emp_id;

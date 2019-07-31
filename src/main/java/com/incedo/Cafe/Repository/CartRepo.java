@@ -34,7 +34,6 @@ public class CartRepo  {
     public int insert_details(Cart cart) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String strDate= formatter.format( cart.getDatetime());
-//        System.out.println("date="+cart.getDatetime()+"  str="+strDate);
 
         int Id_test =(int) jdbcTemplate.queryForObject("select cart_id from cart where id = (select max(id) from cart)",Integer.class);
         cart.setCart_id(Id_test+1);
@@ -67,4 +66,7 @@ public class CartRepo  {
         }
     }
 
+    public void updateStatus(Cart carts) {
+        jdbcTemplate.update("update cart set payment_status='"+carts.getPayment_status()+"',txn_id = '"+carts.getTnx_id()+"' where cart_id="+carts.getCart_id()+";");
+    }
 }

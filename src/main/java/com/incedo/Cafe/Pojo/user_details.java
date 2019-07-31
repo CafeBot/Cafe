@@ -8,6 +8,18 @@ import java.security.PrivateKey;
 import java.util.Objects;
 
 public class user_details {
+
+    @JsonProperty("emp_id")
+    private int emp_id;
+
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("phone_no")
+    private long phone_no;
+
+
+
     public user_details(int emp_id, String name, long phone_no) {
         this.emp_id = emp_id;
         this.name = name;
@@ -63,15 +75,7 @@ public class user_details {
         this.phone_no = phone_no;
     }
 
-    @Autowired
-@GeneratedValue
 
-    @JsonProperty("emp_id")
-    private int emp_id;
 
-    @JsonProperty("name")
-    private String name;
 
-    @JsonProperty("phone_no")
-    private long phone_no;
 }

@@ -1,18 +1,13 @@
 package com.incedo.Cafe.Services;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 public class paytmService {
     public static Object paytm(int Emp_id,int Cart_id,float Total,long Ph_no) {
-    /* initialize a TreeMap object */
     TreeMap<String, String> paytmParams = new TreeMap<String, String>();
-
-    JdbcTemplate jdbcTemplate = new JdbcTemplate();
-    System.out.println();
 
     /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
     paytmParams.put("MID", "TQnSWF25066974419589");
@@ -36,7 +31,7 @@ public class paytmService {
     paytmParams.put("MOBILE_NO", ""+Ph_no+"");
 
     /* customer's email */
-    paytmParams.put("EMAIL", "akashbarne.2@gmail.com");
+    paytmParams.put("EMAIL", "demo@gmail.com");
 
 /**
  * Amount in INR that is payble by customer

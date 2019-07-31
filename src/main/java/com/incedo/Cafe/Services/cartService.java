@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class cartService {
+    CartRepo crp = new CartRepo();
 
 
     public int saveOrder(Cart cart) {
-
-        CartRepo crp = new CartRepo();
         return crp.insert_details(cart);
+    }
+
+    public void UpdateStatus(Cart carts) {
+        crp.updateStatus(carts);
     }
 }
 
