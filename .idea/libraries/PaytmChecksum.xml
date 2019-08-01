@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="PaytmChecksum">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../Paytm_Web_Sample_Kit_Java-master/Java Kit 1.8/PaytmChecksum.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/External_JAR/PaytmChecksum.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

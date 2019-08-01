@@ -1,13 +1,8 @@
 package com.incedo.Cafe.Controller;
-
-import com.incedo.Cafe.Greeting;
 import com.incedo.Cafe.Pojo.Cart;
-import com.incedo.Cafe.Services.Services;
+import com.incedo.Cafe.Pojo.Paytm;
 import com.incedo.Cafe.Services.cartService;
 import com.incedo.Cafe.Services.paytmService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,34 +11,29 @@ public class controller {
 
 
     @PostMapping("/user/order/save")
-    public String saveOrder(@RequestBody Cart carts){
+    public int saveOrder(@RequestBody Cart carts){
         cartService cartService = new cartService();
-        cartService.saveOrder(carts);
-        return "Success";
+        int Cart_id = cartService.saveOrder(carts);
+        return Cart_id;
     }
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
-/*
-    @PostMapping("/greeting")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        Greeting g = new Greeting(1,"akash");
-        return g;
+    @PostMapping("/user/order/status")
+    public String StatusUpdate(@RequestBody Cart carts){
+        cartService cartService = new cartService();
+        int Row_UPdated = cartService.UpdateStatus(carts);
+        if(Row_UPdated==0)
+            return "FAILED TO UPDATE PAYMENT STATUS";
+        else
+            return "PAYMENT STATUS UPDATED";
     }
-    @PostMapping("/abc")
-    public void hello(@RequestBody Greeting g){
-        System.out.println(g.getContent()+" "+g.getId());
-        jdbcTemplate.execute("insert into user_details values(1,'alkash',98728327)");
-
-    }
-    */
-
-
-    @GetMapping("/user/order/pay")
-    public Object paytm(){
+  
+  
+    @PostMapping("/user/order/pay")
+    public Object paytm(@RequestBody Paytm paytm){
         paytmService paytmService = new paytmService();
-        return paytmService.paytm();
+        //Paytm paytm = new Paytm(emp_id,cart_id,total,ph_no);
+        return paytmService.paytm(paytm);
     }
 
     @PostMapping("/paytmStatus")
@@ -51,9 +41,9 @@ public class controller {
         return "response";
     }
 
-    @ExceptionHandler
+
     @PostMapping
-    public Object error() {
+    public Object errorr() {
         return "Fail";
     }
 
