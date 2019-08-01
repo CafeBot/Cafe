@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Set;
 
 public class CartRepo  {
+
     @Autowired
     CreateJdbcTemplate createJdbcTemplate = new CreateJdbcTemplate();
     JdbcTemplate jdbcTemplate;
@@ -69,4 +70,5 @@ public class CartRepo  {
     public int updateStatus(Cart carts) {
         return jdbcTemplate.update("update cafe_cart set payment_status='"+carts.getPayment_status()+"',txn_id = '"+carts.getTnx_id()+"' where cart_id="+carts.getCart_id()+";");
     }
+
 }

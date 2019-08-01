@@ -3,7 +3,9 @@ package com.incedo.Cafe.Pojo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Snack {
-    @JsonProperty("snack_id")
+
+  
+  @JsonProperty("snack_id")
     private int snack_id;
 
     @JsonProperty("qty")
@@ -36,9 +38,6 @@ public class Snack {
     public void setCost(int cost) {
         this.cost = cost;
     }
-
-
-
 
 
     @Override

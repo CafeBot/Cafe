@@ -21,6 +21,7 @@ public class user_details {
 
 
     public user_details(int emp_id, String name, long phone_no) {
+
         this.emp_id = emp_id;
         this.name = name;
         this.phone_no = phone_no;
@@ -74,8 +75,5 @@ public class user_details {
     public void setPhone_no(long phone_no) {
         this.phone_no = phone_no;
     }
-
-
-
 
 }

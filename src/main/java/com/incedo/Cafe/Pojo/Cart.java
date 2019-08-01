@@ -48,6 +48,7 @@ public class Cart {
         this.tnx_id = tnx_id;
     }
 
+
     public int getEmp_id() {
         return emp_id;
     }
@@ -127,6 +128,7 @@ public class Cart {
                 Objects.equals(datetime, cart.datetime) &&
                 Objects.equals(payment_status, cart.payment_status) &&
                 Objects.equals(tnx_id, cart.tnx_id) &&
+
                 Arrays.equals(snack, cart.snack);
     }
 
@@ -163,6 +165,5 @@ public class Cart {
         this.tnx_id = tnx_id;
         this.snack = snack;
     }
-
 
 }

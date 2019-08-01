@@ -2,13 +2,13 @@ package com.incedo.Cafe.Services;
 
 import com.incedo.Cafe.Pojo.Paytm;
 import com.paytm.pg.merchant.CheckSumServiceHelper;
-
 import java.util.Map;
 import java.util.TreeMap;
 
 public class paytmService {
     public static Object paytm(Paytm paytm) {
     TreeMap<String, String> paytmParams = new TreeMap<String, String>();
+
 
     /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
     paytmParams.put("MID", "TQnSWF25066974419589");
@@ -39,6 +39,7 @@ public class paytmService {
  * this should be numeric with optionally having two decimal points
  */
     paytmParams.put("TXN_AMOUNT", ""+paytm.getTotal()+"");
+
 
     /* on completion of transaction, we will send you the response on this URL */
     paytmParams.put("CALLBACK_URL", "http://localhost:8080/paytmStatus");
