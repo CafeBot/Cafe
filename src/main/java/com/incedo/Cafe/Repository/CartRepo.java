@@ -35,10 +35,10 @@ public class CartRepo  {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String strDate= formatter.format( cart.getDatetime());
 
-        int Id_test =(int) jdbcTemplate.queryForObject("select cart_id from cart where id = (select max(id) from cart)",Integer.class);
+        int Id_test =(int) jdbcTemplate.queryForObject("select cart_id from cafe_cart where id = (select max(id) from cafe_cart)",Integer.class);
         cart.setCart_id(Id_test+1);
         for (Snack snack: cart.getSnack()) {
-            jdbcTemplate.update("insert into cart (emp_id,cart_id,snack_id,qty,date_time,total,txn_id,payment_status)values(" + cart.getEmp_id() + "," + cart.getCart_id() + "," + snack.getSnack_id() + "," + snack.getQty() + ",'" + strDate + "'," + cart.getTotal() + ",'"+cart.getTnx_id()+"','" + cart.getPayment_status() + "')");
+            jdbcTemplate.update("insert into cafe_cart (emp_id,cart_id,snack_id,qty,date_time,total,txn_id,payment_status)values(" + cart.getEmp_id() + "," + cart.getCart_id() + "," + snack.getSnack_id() + "," + snack.getQty() + ",'" + strDate + "'," + cart.getTotal() + ",'"+cart.getTnx_id()+"','" + cart.getPayment_status() + "')");
         }
 
         if(isExist(cart)) {
@@ -66,7 +66,7 @@ public class CartRepo  {
         }
     }
 
-    public void updateStatus(Cart carts) {
-        jdbcTemplate.update("update cart set payment_status='"+carts.getPayment_status()+"',txn_id = '"+carts.getTnx_id()+"' where cart_id="+carts.getCart_id()+";");
+    public int updateStatus(Cart carts) {
+        return jdbcTemplate.update("update cafe_cart set payment_status='"+carts.getPayment_status()+"',txn_id = '"+carts.getTnx_id()+"' where cart_id="+carts.getCart_id()+";");
     }
 }

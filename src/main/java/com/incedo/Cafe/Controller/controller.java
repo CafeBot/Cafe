@@ -22,8 +22,11 @@ public class controller {
     @PostMapping("/user/order/status")
     public String StatusUpdate(@RequestBody Cart carts){
         cartService cartService = new cartService();
-        cartService.UpdateStatus(carts);
-        return "Success";
+        int Row_UPdated = cartService.UpdateStatus(carts);
+        if(Row_UPdated==0)
+            return "FAILED TO UPDATE PAYMENT STATUS";
+        else
+            return "PAYMENT STATUS UPDATED";
     }
 
     //localhost:8080/user/order/pay?Emp_id=11111&Cart_id=11111&Total=100&Ph_no=8237668870
