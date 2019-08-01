@@ -6,7 +6,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 public class CreateJdbcTemplate {
-    private static final String url = "jdbc:mysql://localhost:3306/northstar_project";
+    private static final String url = "jdbc:mysql://localhost:3306/ Northstar_project";
     private static final String dbUsername = "root";
     private static final String dbPassword = "Admin";
 
