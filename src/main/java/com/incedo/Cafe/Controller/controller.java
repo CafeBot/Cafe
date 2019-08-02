@@ -36,6 +36,16 @@ public class controller {
         return paytmService.paytm(paytm);
     }
 
+
+ @GetMapping("/user/order/pay")
+ public Object paytm(@RequestParam int emp_id,@RequestParam int cart_id, @RequestParam float total,@RequestParam long ph_no){
+
+     //paytmService paytmService = new paytmService();
+     Paytm paytm = new Paytm(emp_id,cart_id,total,ph_no);
+     return paytmService.paytm(paytm);
+ }
+
+
     @PostMapping("/paytmStatus")
     public Object Satus() {
         return "response";
