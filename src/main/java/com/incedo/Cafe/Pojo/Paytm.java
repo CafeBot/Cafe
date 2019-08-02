@@ -14,7 +14,8 @@ public class Paytm {
     private int Cart_id;
 
     @JsonProperty("total")
-    private int Total;
+    private float Total;
+
 
     @JsonProperty("ph_no.")
     private long Ph_no;
@@ -35,11 +36,12 @@ public class Paytm {
         Cart_id = cart_id;
     }
 
-    public int getTotal() {
+    public float getTotal() {
         return Total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(float total) {
+
         Total = total;
     }
 
@@ -51,7 +53,8 @@ public class Paytm {
         Ph_no = ph_no;
     }
 
-    public Paytm(int emp_id, int cart_id, int total, long ph_no) {
+    public Paytm(int emp_id, int cart_id, float total, long ph_no) {
+
         Emp_id = emp_id;
         Cart_id = cart_id;
         Total = total;
