@@ -20,6 +20,17 @@ public class Paytm {
     @JsonProperty("ph_no.")
     private long Ph_no;
 
+    @JsonProperty("RESPMSG")
+    private String resp;
+
+    public String getResp() {
+        return resp;
+    }
+
+    public void setResp(String resp) {
+        this.resp = resp;
+    }
+
     public int getEmp_id() {
         return Emp_id;
     }

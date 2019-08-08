@@ -1,7 +1,10 @@
 package com.incedo.Cafe.Services;
 
 import com.incedo.Cafe.Pojo.Paytm;
+import com.incedo.Cafe.Pojo.paytmResponse;
 import com.paytm.pg.merchant.CheckSumServiceHelper;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -87,4 +90,52 @@ public class paytmService {
     return  outputHtml;
 }
 
+    public static Object paytmresponse(HttpServletRequest request) {
+        paytmResponse p = new paytmResponse();
+        p.setORDERID(request.getParameter("ORDERID"));
+        p.setMID(request.getParameter("MID"));
+        p.setTXNAMOUNT(request.getParameter("TXNAMOUNT"));
+        p.setCURRENCY(request.getParameter("CURRENCY"));
+        p.setSTATUS(request.getParameter("STATUS"));
+        p.setRESPCODE(request.getParameter("RESPCODE"));
+        p.setRESPMSG(request.getParameter("RESPMSG"));
+        p.setBANKTXNID(request.getParameter("BANKTXNID"));
+        p.setCHECKSUMHASH(request.getParameter("CHECKSUMHASH"));
+        System.out.println(request.getParameter("ORDERID"));
+
+        System.out.println(p.getRESPMSG());
+
+        StringBuilder outputHtml = new StringBuilder();
+        outputHtml.append("<style>.button1 {\n" +
+                "  -webkit-transition-duration: 0.4s; /* Safari */\n" +
+                "  transition-duration: 0.4s;\n" +
+                "}\n" +
+                "\n" +
+                ".button1:hover {\n" +
+                "  background-color: #EF4815; /*Orange */\n" +
+                "  color: white;\n" +
+                "}.button1 {\n" +
+                "  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);\n" +
+                "}\n</style><html>");
+        outputHtml.append("<head>");
+        outputHtml.append("<title>Payment status</title>");
+        outputHtml.append("</head>");
+        outputHtml.append("<body ><center><img src='https://www.incedoinc.com/templates/common/images/logo.svg'  width = 50%>");
+        if(p.getRESPMSG().equals("Txn Success"))
+        {
+            outputHtml.append("<br><br><br><br><H1>PAYMENT SUCCESSFUL</H1><br><h2>Thank you for your order</h2></centre>");
+        }
+        else{
+
+            outputHtml.append("<br><br><br><br><H1>PAYMENT Failed</H1><br><H2>"+p.getRESPMSG()+"</H2><br><h2>please Retry   </h2>");
+
+        }
+        outputHtml.append("<form  action=\"http://localhost:3000/\">\n" +
+                "    <input class = 'button1' type=\"submit\" value=\"Go to Home\" />\n" +
+                "</form></centre>");
+        outputHtml.append("</body>");
+        outputHtml.append("</html>");
+        return outputHtml;
+
+    }
 }

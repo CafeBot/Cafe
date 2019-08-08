@@ -1,14 +1,17 @@
 package com.incedo.Cafe.Controller;
 import com.incedo.Cafe.Pojo.Cart;
 import com.incedo.Cafe.Pojo.Paytm;
+import com.incedo.Cafe.Pojo.paytmResponse;
 import com.incedo.Cafe.Services.cartService;
 import com.incedo.Cafe.Services.paytmService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+
 
 @RestController
 public class controller {
-
 
     @PostMapping("/user/order/save")
     public int saveOrder(@RequestBody Cart carts){
@@ -36,25 +39,23 @@ public class controller {
         return paytmService.paytm(paytm);
     }
 
-
- @GetMapping("/user/order/pay")
- public Object paytm(@RequestParam int emp_id,@RequestParam int cart_id, @RequestParam float total,@RequestParam long ph_no){
-
-     //paytmService paytmService = new paytmService();
-     Paytm paytm = new Paytm(emp_id,cart_id,total,ph_no);
-     return paytmService.paytm(paytm);
+    @CrossOrigin(origins = "http://localhost:3000")
+ @GetMapping("/user/order/payDirectPaytm")
+ public Object paytmdirect(@RequestParam int emp_id,@RequestParam int cart_id, @RequestParam float total,@RequestParam long ph_no){
+        Paytm paytm = new Paytm(emp_id,cart_id,total,ph_no);
+        return paytmService.paytm(paytm);
  }
 
 
-    @PostMapping("/paytmStatus")
-    public Object Satus() {
-        return "response";
+    @RequestMapping(value = "/paytmStatus",method = RequestMethod.POST, consumes = "application/json",headers = "content-type=application/x-www-form-urlencoded")
+    public @ResponseBody Object paytmStatus(HttpServletRequest request)  {
+        return paytmService.paytmresponse(request);
     }
 
 
-    @PostMapping
-    public Object errorr() {
-        return "Fail";
+    @PostMapping("/error")
+    public Object errorr(Object o) {
+        return o;
     }
 
 
