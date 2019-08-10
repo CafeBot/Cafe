@@ -28,7 +28,7 @@ public class CartRepo  {
         }
     }
 
-    ;
+
 
 
 
@@ -67,8 +67,8 @@ public class CartRepo  {
         }
     }
 
-    public int updateStatus(Cart carts) {
-        return jdbcTemplate.update("update cafe_cart set payment_status='"+carts.getPayment_status()+"',txn_id = '"+carts.getTnx_id()+"' where cart_id="+carts.getCart_id()+";");
+    public int updateStatus(int orderId,String txnID ,String paymentStatus) {
+        return jdbcTemplate.update("update cafe_cart set payment_status='"+paymentStatus+"',txn_id = '"+txnID+"' where cart_id="+orderId+";");
     }
 
 }

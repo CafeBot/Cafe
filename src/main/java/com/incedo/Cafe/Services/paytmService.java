@@ -2,19 +2,21 @@ package com.incedo.Cafe.Services;
 
 import com.incedo.Cafe.Pojo.Paytm;
 import com.incedo.Cafe.Pojo.paytmResponse;
+import com.incedo.Cafe.Repository.PaytmRepo;
+import com.incedo.Cafe.configuration.SetEnvironment;
 import com.paytm.pg.merchant.CheckSumServiceHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class paytmService {
+    static SetEnvironment setEnvironment = new SetEnvironment();
     public static Object paytm(Paytm paytm) {
     TreeMap<String, String> paytmParams = new TreeMap<String, String>();
-
-
     /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
-    paytmParams.put("MID", "TQnSWF25066974419589");
+    paytmParams.put("MID", setEnvironment.Patm_MID);
 
     /* Find your WEBSITE in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
     paytmParams.put("WEBSITE", "WEBSTAGING");
@@ -35,7 +37,7 @@ public class paytmService {
     paytmParams.put("MOBILE_NO", ""+paytm.getPh_no()+"");
 
     /* customer's email */
-    paytmParams.put("EMAIL", "demo@gmail.com");
+    paytmParams.put("EMAIL", setEnvironment.paytm_MEmailId);
 
 /**
  * Amount in INR that is payble by customer
@@ -45,7 +47,7 @@ public class paytmService {
 
 
     /* on completion of transaction, we will send you the response on this URL */
-    paytmParams.put("CALLBACK_URL", "http://localhost:8080/paytmStatus");
+        paytmParams.put("CALLBACK_URL", setEnvironment.Paytm_call_back_URL);
 
 /**
  * Generate checksum for parameters we have
@@ -54,16 +56,11 @@ public class paytmService {
  */
     String checksum = null;
     try {
-        checksum = CheckSumServiceHelper.getCheckSumServiceHelper().genrateCheckSum("L#V&%HJbOO03LS2S", paytmParams);
+        checksum = CheckSumServiceHelper.getCheckSumServiceHelper().genrateCheckSum(setEnvironment.paytm_MKey, paytmParams);
     } catch (Exception e) {
         e.printStackTrace();
     }
 
-    /* for Staging */
-    String url = "https://securegw-stage.paytm.in/order/process";
-
-    /* for Production */
-// String url = "https://securegw.paytm.in/order/process";
 
     /* Prepare HTML Form and Submit to Paytm */
     StringBuilder outputHtml = new StringBuilder();
@@ -73,7 +70,7 @@ public class paytmService {
     outputHtml.append("</head>");
     outputHtml.append("<body>");
     outputHtml.append("<center><h1>Please do not refresh this page...</h1></center>");
-    outputHtml.append("<form method='post' action='" + url + "' name='paytm_form'>");
+    outputHtml.append("<form method='post' action='" + setEnvironment.Paytm_url + "' name='paytm_form'>");
 
     for(Map.Entry<String,String> entry : paytmParams.entrySet()) {
         outputHtml.append("<input type='hidden' name='" + entry.getKey() + "' value='" + entry.getValue() + "'>");
@@ -90,7 +87,7 @@ public class paytmService {
     return  outputHtml;
 }
 
-    public static Object paytmresponse(HttpServletRequest request) {
+    public static paytmResponse  paytmresponse(HttpServletRequest request) {
         paytmResponse p = new paytmResponse();
         p.setORDERID(request.getParameter("ORDERID"));
         p.setMID(request.getParameter("MID"));
@@ -105,37 +102,12 @@ public class paytmService {
 
         System.out.println(p.getRESPMSG());
 
-        StringBuilder outputHtml = new StringBuilder();
-        outputHtml.append("<style>.button1 {\n" +
-                "  -webkit-transition-duration: 0.4s; /* Safari */\n" +
-                "  transition-duration: 0.4s;\n" +
-                "}\n" +
-                "\n" +
-                ".button1:hover {\n" +
-                "  background-color: #EF4815; /*Orange */\n" +
-                "  color: white;\n" +
-                "}.button1 {\n" +
-                "  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);\n" +
-                "}\n</style><html>");
-        outputHtml.append("<head>");
-        outputHtml.append("<title>Payment status</title>");
-        outputHtml.append("</head>");
-        outputHtml.append("<body ><center><img src='https://www.incedoinc.com/templates/common/images/logo.svg'  width = 50%>");
-        if(p.getRESPMSG().equals("Txn Success"))
-        {
-            outputHtml.append("<br><br><br><br><H1>PAYMENT SUCCESSFUL</H1><br><h2>Thank you for your order</h2></centre>");
-        }
-        else{
+        return p;
 
-            outputHtml.append("<br><br><br><br><H1>PAYMENT Failed</H1><br><H2>"+p.getRESPMSG()+"</H2><br><h2>please Retry   </h2>");
+    }
 
-        }
-        outputHtml.append("<form  action=\"http://localhost:3000/\">\n" +
-                "    <input class = 'button1' type=\"submit\" value=\"Go to Home\" />\n" +
-                "</form></centre>");
-        outputHtml.append("</body>");
-        outputHtml.append("</html>");
-        return outputHtml;
-
+    public static String fetchStatus(int orderId) {
+        PaytmRepo paytmFetchOrderId = new PaytmRepo();
+        return paytmFetchOrderId.fetchOrderId(orderId);
     }
 }
