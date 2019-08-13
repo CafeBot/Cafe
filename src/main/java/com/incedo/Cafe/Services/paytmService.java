@@ -99,6 +99,7 @@ public class paytmService {
         p.setBANKTXNID(request.getParameter("BANKTXNID"));
         p.setCHECKSUMHASH(request.getParameter("CHECKSUMHASH"));
         System.out.println(request.getParameter("ORDERID"));
+        p.setTXNID(request.getParameter("TXNID"));
 
         System.out.println(p.getRESPMSG());
 
