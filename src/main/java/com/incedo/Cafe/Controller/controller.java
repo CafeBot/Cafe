@@ -63,6 +63,11 @@ public class controller {
     @GetMapping("/user/order/fetchStatus")
     public String fetchStatus(@RequestParam int orderId){
        String status =  paytmService.fetchStatus(orderId);
+       if(status.equals("TXN_SUCCESS"))
+           return "Your order is placed successfully";
+       else if(status.equals("TXN_FAILURE"))
+           return "Order payment Failed";
+       else
         return status;
     }
 
