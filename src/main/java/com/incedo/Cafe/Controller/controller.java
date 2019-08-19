@@ -1,7 +1,6 @@
 package com.incedo.Cafe.Controller;
-import com.incedo.Cafe.Pojo.Cart;
-import com.incedo.Cafe.Pojo.Paytm;
-import com.incedo.Cafe.Pojo.paytmResponse;
+import com.incedo.Cafe.Pojo.*;
+import com.incedo.Cafe.Services.LoginService;
 import com.incedo.Cafe.Services.cartService;
 import com.incedo.Cafe.Services.paytmService;
 import com.incedo.Cafe.configuration.SetEnvironment;
@@ -14,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class controller {
+
+    LoginService loginService= new LoginService();
 
     SetEnvironment setEnvironment = new SetEnvironment();
 
@@ -54,6 +55,7 @@ public class controller {
 
     @RequestMapping(value = "/paytmStatus",method = RequestMethod.POST, consumes = "application/json",headers = "content-type=application/x-www-form-urlencoded")
     public Object saveProfileJson(HttpServletRequest request)  {
+        System.out.println(request);
         paytmResponse p = paytmService.paytmresponse(request);
         StatusUpdate(Integer.parseInt(p.getORDERID()),p.getTXNID(),p.getSTATUS());
             return new ModelAndView("redirect:" + setEnvironment.paytm_redirect);
@@ -70,6 +72,23 @@ public class controller {
        else
         return status;
     }
+
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/login")
+    public Registration Authenticate(@RequestBody Login loginCredentials){
+        return loginService.Authenticate(loginCredentials);
+
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/register")
+    public String Register(@RequestBody Registration register){
+        return loginService.RegisterUser(register);
+
+    }
+
+
 
 }
 
