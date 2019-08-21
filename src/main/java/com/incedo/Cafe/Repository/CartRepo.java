@@ -42,10 +42,6 @@ public class CartRepo  {
             jdbcTemplate.update("insert into cafe_cart (emp_id,cart_id,snack_id,qty,date_time,total,txn_id,payment_status)values(" + cart.getEmp_id() + "," + cart.getCart_id() + "," + snack.getSnack_id() + "," + snack.getQty() + ",'" + strDate + "'," + cart.getTotal() + ",'"+cart.getTnx_id()+"','" + cart.getPayment_status() + "')");
         }
 
-        if(isExist(cart)) {
-            jdbcTemplate.update("insert into user_details values(" + cart.getEmp_id() + ",'" + cart.getEmp_name() + "'," + cart.getPh_no() + ");");
-        }
-
 
         return cart.getCart_id();
 
@@ -57,7 +53,7 @@ public class CartRepo  {
     private boolean isExist(Cart cart) {
 
 
-        int Id_test =(int) jdbcTemplate.queryForObject("select Count(emp_id) from user_details where emp_id = "+cart.getEmp_id()+" ",Integer.class);
+        int Id_test =(int) jdbcTemplate.queryForObject("select Count(emp_id) from User_details where emp_id = "+cart.getEmp_id()+" ",Integer.class);
         System.out.println(Id_test);
         if(Id_test==0){
             return true;
