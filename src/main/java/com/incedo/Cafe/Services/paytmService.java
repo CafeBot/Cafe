@@ -1,17 +1,22 @@
 package com.incedo.Cafe.Services;
 
 import com.incedo.Cafe.Pojo.Paytm;
+import com.incedo.Cafe.Pojo.paytmResponse;
+import com.incedo.Cafe.Repository.PaytmRepo;
+import com.incedo.Cafe.configuration.SetEnvironment;
 import com.paytm.pg.merchant.CheckSumServiceHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class paytmService {
+    static SetEnvironment setEnvironment = new SetEnvironment();
     public static Object paytm(Paytm paytm) {
     TreeMap<String, String> paytmParams = new TreeMap<String, String>();
-
-
     /* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
-    paytmParams.put("MID", "TQnSWF25066974419589");
+    paytmParams.put("MID", setEnvironment.Patm_MID);
 
     /* Find your WEBSITE in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
     paytmParams.put("WEBSITE", "WEBSTAGING");
@@ -32,7 +37,7 @@ public class paytmService {
     paytmParams.put("MOBILE_NO", ""+paytm.getPh_no()+"");
 
     /* customer's email */
-    paytmParams.put("EMAIL", "demo@gmail.com");
+    paytmParams.put("EMAIL", setEnvironment.paytm_MEmailId);
 
 /**
  * Amount in INR that is payble by customer
@@ -42,7 +47,7 @@ public class paytmService {
 
 
     /* on completion of transaction, we will send you the response on this URL */
-    paytmParams.put("CALLBACK_URL", "http://localhost:8080/paytmStatus");
+        paytmParams.put("CALLBACK_URL", setEnvironment.Paytm_call_back_URL);
 
 /**
  * Generate checksum for parameters we have
@@ -51,16 +56,11 @@ public class paytmService {
  */
     String checksum = null;
     try {
-        checksum = CheckSumServiceHelper.getCheckSumServiceHelper().genrateCheckSum("L#V&%HJbOO03LS2S", paytmParams);
+        checksum = CheckSumServiceHelper.getCheckSumServiceHelper().genrateCheckSum(setEnvironment.paytm_MKey, paytmParams);
     } catch (Exception e) {
         e.printStackTrace();
     }
 
-    /* for Staging */
-    String url = "https://securegw-stage.paytm.in/order/process";
-
-    /* for Production */
-// String url = "https://securegw.paytm.in/order/process";
 
     /* Prepare HTML Form and Submit to Paytm */
     StringBuilder outputHtml = new StringBuilder();
@@ -70,7 +70,7 @@ public class paytmService {
     outputHtml.append("</head>");
     outputHtml.append("<body>");
     outputHtml.append("<center><h1>Please do not refresh this page...</h1></center>");
-    outputHtml.append("<form method='post' action='" + url + "' name='paytm_form'>");
+    outputHtml.append("<form method='post' action='" + setEnvironment.Paytm_url + "' name='paytm_form'>");
 
     for(Map.Entry<String,String> entry : paytmParams.entrySet()) {
         outputHtml.append("<input type='hidden' name='" + entry.getKey() + "' value='" + entry.getValue() + "'>");
@@ -87,4 +87,28 @@ public class paytmService {
     return  outputHtml;
 }
 
+    public static paytmResponse  paytmresponse(HttpServletRequest request) {
+        paytmResponse p = new paytmResponse();
+        p.setORDERID(request.getParameter("ORDERID"));
+        p.setMID(request.getParameter("MID"));
+        p.setTXNAMOUNT(request.getParameter("TXNAMOUNT"));
+        p.setCURRENCY(request.getParameter("CURRENCY"));
+        p.setSTATUS(request.getParameter("STATUS"));
+        p.setRESPCODE(request.getParameter("RESPCODE"));
+        p.setRESPMSG(request.getParameter("RESPMSG"));
+        p.setBANKTXNID(request.getParameter("BANKTXNID"));
+        p.setCHECKSUMHASH(request.getParameter("CHECKSUMHASH"));
+        System.out.println(request.getParameter("ORDERID"));
+        p.setTXNID(request.getParameter("TXNID"));
+
+        System.out.println(p.getRESPMSG());
+
+        return p;
+
+    }
+
+    public static String fetchStatus(int orderId) {
+        PaytmRepo paytmFetchOrderId = new PaytmRepo();
+        return paytmFetchOrderId.fetchOrderId(orderId);
+    }
 }

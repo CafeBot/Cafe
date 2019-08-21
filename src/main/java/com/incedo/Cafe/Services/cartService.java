@@ -14,8 +14,8 @@ public class cartService {
         return crp.insert_details(cart);
     }
 
-    public int UpdateStatus(Cart carts) {
-        return crp.updateStatus(carts);
+    public int UpdateStatus(int orderId,String txnID ,String paymentStatus) {
+        return crp.updateStatus(orderId,txnID,paymentStatus);
     }
 }
 
