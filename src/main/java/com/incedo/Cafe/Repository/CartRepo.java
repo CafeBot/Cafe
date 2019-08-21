@@ -39,7 +39,7 @@ public class CartRepo  {
         int Id_test =(int) jdbcTemplate.queryForObject("select cart_id from cafe_cart where id = (select max(id) from cafe_cart)",Integer.class);
         cart.setCart_id(Id_test+1);
         for (Snack snack: cart.getSnack()) {
-            jdbcTemplate.update("insert into cafe_cart (emp_id,cart_id,snack_id,qty,date_time,total,txn_id,payment_status)values(" + cart.getEmp_id() + "," + cart.getCart_id() + "," + snack.getSnack_id() + "," + snack.getQty() + ",'" + strDate + "'," + cart.getTotal() + ",'"+cart.getTnx_id()+"','" + cart.getPayment_status() + "')");
+            jdbcTemplate.update("insert into cafe_cart (emp_id,emp_name,cart_id,snack_id,qty,date_time,total,txn_id,payment_status,snack_name,ind_total)values(" + cart.getEmp_id() + ",'"+cart.getEmp_name()+"'," + cart.getCart_id() + "," + snack.getSnack_id() + "," + snack.getQty() + ",'" + strDate + "'," + cart.getTotal() + ",'"+cart.getTnx_id()+"','" + cart.getPayment_status() + "','"+snack.getSnack_name()+"',"+snack.getInd_total()+")");
         }
 
 
