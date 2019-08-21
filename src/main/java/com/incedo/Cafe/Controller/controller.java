@@ -59,6 +59,7 @@ public class controller {
         paytmResponse p = paytmService.paytmresponse(request);
         StatusUpdate(Integer.parseInt(p.getORDERID()),p.getTXNID(),p.getSTATUS());
             return new ModelAndView("redirect:" + setEnvironment.paytm_redirect);
+
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
