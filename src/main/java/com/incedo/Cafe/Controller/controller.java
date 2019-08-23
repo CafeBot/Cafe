@@ -18,7 +18,7 @@ public class controller {
 
     SetEnvironment setEnvironment = new SetEnvironment();
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://10.151.240.123:3000")
     @PostMapping("/user/order/save")
     public int saveOrder(@RequestBody Cart carts){
         cartService cartService = new cartService();
@@ -37,7 +37,7 @@ public class controller {
             return "PAYMENT STATUS UPDATED";
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://10.151.240.123:3000")
     @PostMapping("/user/order/pay")
     public Object paytm(@RequestBody Paytm paytm){
         paytmService paytmService = new paytmService();
@@ -45,7 +45,7 @@ public class controller {
         return paytmService.paytm(paytm);
     }
 
-    @CrossOrigin(origins ="http://localhost:3000")
+    @CrossOrigin(origins ="http://10.151.240.123:3000")
  @GetMapping("/user/order/payDirectPaytm")
  public Object paytmdirect(@RequestParam int emp_id,@RequestParam int cart_id, @RequestParam float total,@RequestParam long ph_no){
         Paytm paytm = new Paytm(emp_id,cart_id,total,ph_no);
@@ -62,7 +62,7 @@ public class controller {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://10.151.240.123:3000")
     @GetMapping("/user/order/fetchStatus")
     public String fetchStatus(@RequestParam int orderId){
        String status =  paytmService.fetchStatus(orderId);
@@ -75,14 +75,14 @@ public class controller {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://10.151.240.123:3000")
     @PostMapping("/login")
     public Registration Authenticate(@RequestBody Login loginCredentials){
         return loginService.Authenticate(loginCredentials);
 
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "http://10.151.240.123:3000")
     @PostMapping("/register")
     public String Register(@RequestBody Registration register){
         return loginService.RegisterUser(register);
